@@ -13,14 +13,14 @@ package app
 
 var app = App{
 	Name: "%v",
-	Files: []File{
+	Files: map[string]File{
 		%v
 	},
 }
 `
 
 var filePrefab = `
-File{
+"%v": File{
 	Name: "%v",
 	Format: "%v",
 	Contents: []byte{%v},
@@ -54,7 +54,7 @@ func main() {
 		}
 		if format != "ico" {
 			cs := contentsToString(contents)
-			ppf = append(ppf, fmt.Sprintf(filePrefab, name, format, cs))
+			ppf = append(ppf, fmt.Sprintf(filePrefab, name, name, format, cs))
 		}
 	}
 
