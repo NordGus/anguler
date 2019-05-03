@@ -52,7 +52,17 @@ func main() {
 			logger.Println(err)
 			return
 		}
-		if format != "ico" {
+		switch format {
+		case "ico":
+			// DO NOTING
+		case "html":
+			index := string(contents)
+			index = strings.ReplaceAll(index, `<link rel="icon" type="image/x-icon" href="`, `<link rel="icon" type="image/x-icon" href="public/static/images/`)
+			index = strings.ReplaceAll(index, `<link rel="stylesheet" href="`, `<link rel="stylesheet" href="app/`)
+			index = strings.ReplaceAll(index, `src="`, `src="app/`)
+			cs := contentsToString([]byte(index))
+			ppf = append(ppf, fmt.Sprintf(filePrefab, name, name, format, cs))
+		default:
 			cs := contentsToString(contents)
 			ppf = append(ppf, fmt.Sprintf(filePrefab, name, name, format, cs))
 		}
